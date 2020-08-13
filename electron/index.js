@@ -279,6 +279,7 @@ app.on('will-finish-launching', () => {
 
 app.on('before-quit', () => {
   appState.isQuitting = true;
+  tray.destroy();
 });
 
 ipcMain.on('upgrade', (event, installerPath) => {
