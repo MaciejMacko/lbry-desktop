@@ -85,14 +85,14 @@ function ClaimListDiscover(props: Props) {
     pageSize,
     hideBlock,
     defaultClaimType,
-    streamType,
+    streamType = CS.FILE_VIDEO,
     defaultStreamType,
     freshness,
     defaultFreshness = CS.FRESH_WEEK,
     renderProperties,
     includeSupportAction,
     repostedClaimId,
-    hideFilter,
+    hideFilter = true,
     infiniteScroll = true,
     followedTags,
     injectedItem,
@@ -231,12 +231,12 @@ function ClaimListDiscover(props: Props) {
       (options.channel_ids && options.channel_ids.length > 10) ||
       (options.any_tags && options.any_tags.length > 10)
     ) {
-      options.release_time = `>${Math.floor(
-        moment()
-          .subtract(1, CS.FRESH_YEAR)
-          .startOf('week')
-          .unix()
-      )}`;
+      //   options.release_time = `>${Math.floor(
+      //     moment()
+      //       .subtract(1, CS.FRESH_YEAR)
+      //       .startOf('week')
+      //       .unix()
+      //   )}`;
     } else {
       // Hack for at least the New page until https://github.com/lbryio/lbry-sdk/issues/2591 is fixed
       options.release_time = `<${Math.floor(
@@ -247,9 +247,10 @@ function ClaimListDiscover(props: Props) {
     }
   }
 
-  if (feeAmountParam) {
-    options.fee_amount = feeAmountParam;
-  }
+  //   if (feeAmountParam) {
+  // options.fee_amount = feeAmountParam;
+  options.fee_amount = '0';
+  //   }
 
   if (durationParam) {
     if (durationParam === CS.DURATION_SHORT) {
@@ -524,7 +525,7 @@ function ClaimListDiscover(props: Props) {
             )}
           </div>
         </div>
-        {expanded && (
+        {expanded && false && (
           <>
             <div className={classnames('card--inline', `claim-search__menus`)}>
               {/* FRESHNESS FIELD */}

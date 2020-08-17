@@ -27,6 +27,9 @@
   border-right: 1px solid var(--color-border);
   padding-top: var(--spacing-l);
   padding-bottom: var(--spacing-l);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .navigation--filepage {
@@ -198,7 +201,16 @@
   @extend .navigation-links;
   margin-right: 0;
   padding-right: 0;
-  font-size: var(--font-small);
+  margin-top: var(--spacing-xl);
+  margin-bottom: 0;
+
+  .navigation-link {
+    font-size: var(--font-small);
+  }
+
+  .button__label {
+    color: var(--color-text-help);
+  }
 
   .button__content {
     align-items: flex-start;

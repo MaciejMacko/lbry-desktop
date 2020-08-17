@@ -1,5 +1,6 @@
 // @flow
 import { SHOW_ADS } from 'config';
+import type { RowDataItem } from 'homepage';
 import * as ICONS from 'constants/icons';
 import React, { useRef } from 'react';
 import Page from 'component/page';
@@ -21,6 +22,8 @@ type Props = {
   doToggleTagFollowDesktop: string => void,
   doResolveUri: string => void,
   isAuthenticated: boolean,
+  rabbitHole: boolean,
+  dynamicRouteProps: RowDataItem,
 };
 
 function DiscoverPage(props: Props) {
@@ -32,6 +35,7 @@ function DiscoverPage(props: Props) {
     doToggleTagFollowDesktop,
     doResolveUri,
     isAuthenticated,
+    dynamicRouteProps,
   } = props;
   const buttonRef = useRef();
   const isHovering = useHover(buttonRef);
@@ -81,8 +85,8 @@ function DiscoverPage(props: Props) {
   } else {
     headerLabel = (
       <span>
-        <Icon icon={ICONS.DISCOVER} size={10} />
-        {__('All Content')}
+        <Icon icon={(dynamicRouteProps && dynamicRouteProps.icon) || ICONS.DISCOVER} size={10} />
+        {(dynamicRouteProps && dynamicRouteProps.label) || __('All Content')}
       </span>
     );
   }
@@ -96,6 +100,9 @@ function DiscoverPage(props: Props) {
         hiddenNsfwMessage={<HiddenNsfw type="page" />}
         repostedClaimId={repostedClaim ? repostedClaim.claim_id : null}
         injectedItem={SHOW_ADS && !isAuthenticated && IS_WEB && <Ads type="video" />}
+        channelIds={
+          (dynamicRouteProps && dynamicRouteProps.options && dynamicRouteProps.options.channelIds) || undefined
+        }
         meta={
           tag &&
           !isMobile && (
